@@ -10,28 +10,34 @@
   const CONFIG = {
     // Density: one boid per this many screen pixels. Higher = fewer boids.
     // Total count is also capped by MAX_BOIDS so big monitors stay smooth.
-    DENSITY: 14000,
-    MAX_BOIDS: 120,
-    MIN_BOIDS: 20,
+    DENSITY: 8000,
+    MAX_BOIDS: 220,
+    MIN_BOIDS: 30,
 
     MAX_SPEED: 2.2,        // max velocity (px/frame) — clamps how fast boids move
     MAX_FORCE: 0.04,       // max steering force per frame — lower = smoother turns
 
     // Perception radii (px): how far a boid "sees" for each rule
-    SEP_RADIUS: 26,        // separation: avoid crowding neighbors this close
+    SEP_RADIUS: 38,        // separation: avoid crowding neighbors this close
     ALIGN_RADIUS: 55,      // alignment: match heading of neighbors within this range
     COH_RADIUS: 55,        // cohesion: steer toward the center of these neighbors
 
-    // Rule weights: relative influence of each behavior
-    SEP_WEIGHT: 1.6,
+    // Rule weights: relative influence of each behavior.
+    // High separation + low cohesion keeps the flock loose (less clumping).
+    SEP_WEIGHT: 2.2,
     ALIGN_WEIGHT: 1.0,
-    COH_WEIGHT: 0.9,
+    COH_WEIGHT: 0.45,
 
     MOUSE_RADIUS: 90,      // boids steer away from cursor within this radius (px)
     MOUSE_WEIGHT: 2.2,     // strength of the flee-from-mouse force
 
     SIZE: 5,               // triangle length (px)
-    OPACITY: 0.22,         // boid opacity — keep low so text stays readable
+    OPACITY: 0.32,         // boid opacity — keep low so text stays readable
+
+    // Cluster coloring: a boid's color blends from base -> accent as its
+    // neighbor count (within COH_RADIUS) climbs toward CLUSTER_FULL.
+    // Low value = even small groups show strong accent color.
+    CLUSTER_FULL: 3,       // neighbor count at which a boid is fully accent-colored
   };
   // ---------------------------------------------------------------------------
 
@@ -42,6 +48,14 @@
   let width = 0, height = 0, dpr = 1;
   let boids = [];
   const mouse = { x: -9999, y: -9999, active: false };
+
+  // Parse a CSS hex color (#rgb or #rrggbb) into [r, g, b]
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    if (hex.length === 3) hex = hex.split("").map((c) => c + c).join("");
+    const n = parseInt(hex, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
 
   // --- Tiny 2D vector helper (kept inline to avoid any dependency) ---
   function limit(vx, vy, max) {
@@ -161,9 +175,19 @@
     // Wrap around screen edges
     if (b.x < 0) b.x += width; else if (b.x > width) b.x -= width;
     if (b.y < 0) b.y += height; else if (b.y > height) b.y -= height;
+
+    // Remember how crowded this boid is, for cluster coloring in render()
+    b.neighbors = cohN;
   }
 
-  function drawBoid(b) {
+  function drawBoid(b, base, accent) {
+    // Blend base -> accent based on how clustered this boid is
+    const t = Math.min((b.neighbors || 0) / CONFIG.CLUSTER_FULL, 1);
+    const r = Math.round(base[0] + (accent[0] - base[0]) * t);
+    const g = Math.round(base[1] + (accent[1] - base[1]) * t);
+    const bl = Math.round(base[2] + (accent[2] - base[2]) * t);
+    ctx.fillStyle = "rgb(" + r + "," + g + "," + bl + ")";
+
     const angle = Math.atan2(b.vy, b.vx);
     const s = CONFIG.SIZE;
     ctx.save();
@@ -181,12 +205,12 @@
 
   function render() {
     ctx.clearRect(0, 0, width, height);
-    // Resolve --text at runtime so boids match the theme color
-    const color = getComputedStyle(document.documentElement)
-      .getPropertyValue("--text").trim() || "#ffffff";
-    ctx.fillStyle = color;
+    // Resolve theme colors at runtime: base = --text, cluster = --accent
+    const styles = getComputedStyle(document.documentElement);
+    const base = hexToRgb(styles.getPropertyValue("--text").trim() || "#000000");
+    const accent = hexToRgb(styles.getPropertyValue("--accent").trim() || "#3b5bdb");
     ctx.globalAlpha = CONFIG.OPACITY;
-    for (let i = 0; i < boids.length; i++) drawBoid(boids[i]);
+    for (let i = 0; i < boids.length; i++) drawBoid(boids[i], base, accent);
     ctx.globalAlpha = 1;
   }
 

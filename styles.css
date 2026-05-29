@@ -1,9 +1,9 @@
 /* ---- Theme: change these variables to re-skin the whole site ---- */
 :root {
-  --bg: #f2efe8;        /* warm cream background */
-  --text: #1f1d1a;      /* near-black warm text */
-  --muted: #6f6a62;     /* secondary / dimmed text */
-  --accent: #b4503a;    /* rust / terracotta accent */
+  --bg: #f5f6f8;        /* cool light gray background */
+  --text: #181a1f;      /* near-black cool text */
+  --muted: #5f6672;     /* secondary / dimmed text */
+  --accent: #3b5bdb;    /* indigo-blue accent */
   --border: rgba(0, 0, 0, 0.1); /* hairline divider color */
   --maxw: 720px;        /* content column width */
 }
@@ -54,7 +54,6 @@ h1 {
 }
 
 .role {
-  color: var(--accent);
   font-size: 1rem;
   font-weight: 500;
   margin: 0 0 1.5rem;
