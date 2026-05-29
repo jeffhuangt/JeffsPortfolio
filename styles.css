@@ -1,0 +1,164 @@
+/* ---- Theme: change these variables to re-skin the whole site ---- */
+:root {
+  --bg: #f2efe8;        /* warm cream background */
+  --text: #1f1d1a;      /* near-black warm text */
+  --muted: #6f6a62;     /* secondary / dimmed text */
+  --accent: #b4503a;    /* rust / terracotta accent */
+  --border: rgba(0, 0, 0, 0.1); /* hairline divider color */
+  --maxw: 720px;        /* content column width */
+}
+
+* { box-sizing: border-box; }
+
+/* Background lives on <html> so the boids canvas (z-index: -1) shows through.
+   If it were on <body>, the body's background would paint over the canvas. */
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  /* System font stacks only — no external fonts */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Full-screen canvas pinned behind everything */
+#boids {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;          /* sits below content */
+  pointer-events: none; /* never intercepts clicks */
+  display: block;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(3rem, 10vh, 7rem) clamp(1.25rem, 5vw, 2rem);
+}
+
+/* ---- Header ---- */
+header { margin-bottom: 5rem; }
+
+h1 {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.35rem;
+}
+
+.role {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 1.5rem;
+}
+
+.bio {
+  color: var(--muted);
+  max-width: 52ch;
+  margin: 0;
+}
+
+/* ---- Selected Work ---- */
+.section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+}
+
+.work { display: flex; flex-direction: column; }
+
+.project {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  transition: transform 0.25s ease, padding-left 0.25s ease;
+}
+.project:last-child { border-bottom: 1px solid var(--border); }
+
+/* Hover row animation: slide right + reveal arrow */
+.project:hover,
+.project:focus-visible {
+  transform: translateX(6px);
+  padding-left: 4px;
+  outline: none;
+}
+
+.project-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.arrow {
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  margin-left: auto;
+  font-size: 1.1rem;
+}
+.project:hover .arrow,
+.project:focus-visible .arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.year { color: var(--muted); font-size: 0.85rem; }
+
+.project-desc {
+  color: var(--muted);
+  margin: 0.35rem 0 0.75rem;
+  font-size: 0.95rem;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  font-size: 0.72rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* ---- Footer ---- */
+footer {
+  margin-top: 5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+.links a:hover { color: var(--accent); }
+
+@media (max-width: 480px) {
+  header { margin-bottom: 3.5rem; }
+  .links { gap: 1rem 1.25rem; }
+}

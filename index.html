@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jeff Huang</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Boids flocking background (logic in boids.js) -->
+  <canvas id="boids"></canvas>
+
+  <div class="wrap">
+    <!-- ===== Header ===== -->
+    <header>
+      <h1>Jeff Huang</h1>
+      <p class="role">Software Engineer / Your Title Here</p>
+      <p class="bio">
+        I build thoughtful, performant software. This is placeholder text —
+        swap it for a couple of sentences about what you do and what you care
+        about. Keep it short and human.
+      </p>
+    </header>
+
+    <!-- ===== Selected Work ===== -->
+    <section>
+      <p class="section-label">Selected Work</p>
+      <div class="work">
+        <!-- Edit href to link each project; duplicate a block to add more -->
+        <a class="project" href="#">
+          <div class="project-head">
+            <h2 class="project-title">Project One</h2>
+            <span class="year">2025</span>
+            <span class="arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="project-desc">A one-line description of what this project does.</p>
+          <div class="tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">React</span>
+            <span class="tag">Postgres</span>
+          </div>
+        </a>
+
+        <a class="project" href="#">
+          <div class="project-head">
+            <h2 class="project-title">Project Two</h2>
+            <span class="year">2024</span>
+            <span class="arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="project-desc">A one-line description of what this project does.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Redis</span>
+          </div>
+        </a>
+
+        <a class="project" href="#">
+          <div class="project-head">
+            <h2 class="project-title">Project Three</h2>
+            <span class="year">2024</span>
+            <span class="arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="project-desc">A one-line description of what this project does.</p>
+          <div class="tags">
+            <span class="tag">Go</span>
+            <span class="tag">gRPC</span>
+            <span class="tag">Docker</span>
+          </div>
+        </a>
+
+        <a class="project" href="#">
+          <div class="project-head">
+            <h2 class="project-title">Project Four</h2>
+            <span class="year">2023</span>
+            <span class="arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="project-desc">A one-line description of what this project does.</p>
+          <div class="tags">
+            <span class="tag">Rust</span>
+            <span class="tag">WASM</span>
+            <span class="tag">Canvas</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+      <nav class="links">
+        <a href="mailto:jeffhuangt@ucla.edu">Email</a>
+        <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/resume.pdf" target="_blank" rel="noopener">Résumé</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="boids.js"></script>
+</body>
+</html>
