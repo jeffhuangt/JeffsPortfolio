@@ -5,7 +5,7 @@
   --muted: #5f6672;     /* secondary / dimmed text */
   --accent: #3b5bdb;    /* indigo-blue accent */
   --border: rgba(0, 0, 0, 0.1); /* hairline divider color */
-  --maxw: 720px;        /* content column width */
+  --maxw: 760px;        /* content column width */
 }
 
 * { box-sizing: border-box; }
@@ -40,81 +40,77 @@ body {
 .wrap {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: clamp(3rem, 10vh, 7rem) clamp(1.25rem, 5vw, 2rem);
+  padding: clamp(3.5rem, 12vh, 8rem) clamp(1.5rem, 6vw, 2.5rem);
 }
 
 /* ---- Header ---- */
-header { margin-bottom: 5rem; }
+header { margin-bottom: 6rem; }
 
 h1 {
-  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-size: clamp(2.1rem, 6vw, 2.9rem);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 0 0 0.35rem;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.6rem;
 }
 
 .role {
   font-size: 1rem;
   font-weight: 500;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.75rem;
 }
 
 .bio {
   color: var(--muted);
-  max-width: 52ch;
+  max-width: 56ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
   margin: 0;
 }
 
 /* ---- Selected Work ---- */
 .section-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   color: var(--muted);
-  margin: 0 0 1.5rem;
+  margin: 0 0 2.25rem;
 }
 
 .work { display: flex; flex-direction: column; }
 
+/* Two-column editorial row: year sits in a left meta-column,
+   the project content fills the main column. */
 .project {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  padding: 1.25rem 0;
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0 2rem;
+  padding: 1.75rem 0;
   border-top: 1px solid var(--border);
-  transition: transform 0.25s ease, padding-left 0.25s ease;
 }
 .project:last-child { border-bottom: 1px solid var(--border); }
 
-/* Hover row animation: slide right + reveal arrow */
-.project:hover,
-.project:focus-visible {
-  transform: translateX(6px);
-  padding-left: 4px;
-  outline: none;
-}
-
-.project-head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+.year {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.2rem;
 }
 
 .project-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin: 0;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
 }
-
-.year { color: var(--muted); font-size: 0.85rem; }
 
 .project-desc {
   color: var(--muted);
-  margin: 0.35rem 0 0.75rem;
-  font-size: 0.95rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.98rem;
+  max-width: 52ch;
 }
 
-.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .tag {
   font-size: 0.72rem;
   color: var(--muted);
@@ -126,14 +122,14 @@ h1 {
 
 /* ---- Footer ---- */
 footer {
-  margin-top: 5rem;
-  padding-top: 1.5rem;
+  margin-top: 6rem;
+  padding-top: 1.75rem;
   border-top: 1px solid var(--border);
 }
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 .links a {
   color: var(--text);
@@ -143,7 +139,14 @@ footer {
 }
 .links a:hover { color: var(--accent); }
 
-@media (max-width: 480px) {
-  header { margin-bottom: 3.5rem; }
-  .links { gap: 1rem 1.25rem; }
+@media (max-width: 540px) {
+  header { margin-bottom: 4rem; }
+  /* Stack the year above the content on narrow screens */
+  .project {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 1.5rem 0;
+  }
+  .year { padding-top: 0; }
+  .links { gap: 1rem 1.5rem; }
 }
